@@ -306,6 +306,32 @@ Code
       ├── diagnostics/
       │   └── cluster-dump.yaml
       └── README.md
+Các câu lệnh tạo thư mục và các file trên:
+
+  mkdir -p wordpress-k8s/manifests/postgres
+  mkdir -p wordpress-k8s/manifests/wordpress
+  mkdir -p wordpress-k8s/manifests/ingress
+  mkdir -p wordpress-k8s/plugins
+  mkdir -p wordpress-k8s/shell
+  mkdir -p wordpress-k8s/diagnostics
+
+
+  touch wordpress-k8s/manifests/postgres/secret.yaml
+  touch wordpress-k8s/manifests/postgres/pvc.yaml
+  touch wordpress-k8s/manifests/postgres/deployment.yaml
+  touch wordpress-k8s/manifests/postgres/service.yaml
+  touch wordpress-k8s/manifests/wordpress/configmap.yaml
+  touch wordpress-k8s/manifests/wordpress/deployment.yaml
+  touch wordpress-k8s/manifests/wordpress/service.yaml
+  touch wordpress-k8s/manifests/ingress/ingress.yaml
+  touch wordpress-k8s/plugins/install-convert.sh
+  touch wordpress-k8s/plugins/auth-notes.md
+  touch wordpress-k8s/shell/kubectl-autocomplete.sh
+  touch wordpress-k8s/diagnostics/cluster-dump.yaml
+
+
+
+
 🧾 Nội dung các file
 
 
