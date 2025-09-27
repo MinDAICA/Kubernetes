@@ -4,20 +4,40 @@ I. Install kubectl binary with curl on Linux
     1. Install kubectl binary with curl on Linux
         Download the latest release with the command:
           # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    
+             % Total    % Received % Xferd  Average Speed   Time    Time     Time  Curren  Dload  Upload   Total   Spent    Left  Speed
+                                                        100   138  100   138    0     0    349      0 --:--:-- --:--:-- --:--:--   349
+                                                        100 57.7M  100 57.7M    0     0   119k      0  0:08:15  0:08:15 --:--:-- 69225
+
     2. Validate the binary (optional)
         Download the kubectl checksum file:
           # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+        % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current      Dload  Upload   Total   Spent    Left  Speed
+                                                         100   138  100   138    0     0    295      0 --:--:-- --:--:-- --:--:--   295
+                                                         100    64  100    64    0     0     51      0  0:00:01  0:00:01 --:--:--     0
         Validate the kubectl binary against the checksum file:
           # echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-
+            kubectl: OK
     3.Install kubectl
           # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-    
+            
     4.Test to ensure the version you installed is up-to-date:
         # kubectl version --client
         or
         # kubectl version --client --output=yaml
+        --> Client Version: v1.34.1
+            Kustomize Version: v5.7.1
+            or
+        -->   clientVersion:
+              buildDate: "2025-09-09T19:44:50Z"
+              compiler: gc
+              gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
+              gitTreeState: clean
+              gitVersion: v1.34.1
+              goVersion: go1.24.6
+              major: "1"
+              minor: "34"
+              platform: linux/amd64
+            kustomizeVersion: v5.7.1
 
 II. Install using native package management 
     Debian-based distributions:
