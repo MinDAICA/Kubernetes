@@ -1,13 +1,37 @@
 # Reference : https://kubernetes.io/docs/reference/setup-tools/kubeadm/
+I. Install kubectl binary with curl on Linux 
 
-1. Install kubectl binary with curl on Linux
-    Download the latest release with the command:
-      # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    1. Install kubectl binary with curl on Linux
+        Download the latest release with the command:
+          # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    
+    2. Validate the binary (optional)
+        Download the kubectl checksum file:
+          # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+        Validate the kubectl binary against the checksum file:
+          # echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 
-2. Validate the binary (optional)
-    Download the kubectl checksum file:
-      # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-    Validate the kubectl binary against the checksum file:
-      # echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    3.Install kubectl
+          # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    
+    4.Test to ensure the version you installed is up-to-date:
+        # kubectl version --client
+        or
+        # kubectl version --client --output=yaml
 
+II. Install using native package management 
+    Debian-based distributions:
+    Notes:
+        In releases older than Debian 12 and Ubuntu 22.04, folder /etc/apt/keyrings does not exist by default, and it should be created before the curl command.
+            -> mkdir -p /etc/apt/keyrings
+        1. Update the apt package index and install packages needed to use the Kubernetes apt repository:
 
+            sudo apt-get update
+            # apt-transport-https may be a dummy package; if so, you can skip that package
+            sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+       2.  Download the public signing key for the Kubernetes package repositories. The same signing key is used for all repositories so you can disregard the version in the URL:
+    
+            # If the folder `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+            # sudo mkdir -p -m 755 /etc/apt/keyrings
+            curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+            sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
