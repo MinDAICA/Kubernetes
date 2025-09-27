@@ -189,6 +189,35 @@ II. Install using native package management
        4. Update apt package index, then install kubectl:
             # sudo apt-get update
             # sudo apt-get install -y kubectl
+            ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+            ║ root@debian-k8s:~# sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list                                                                     ║
+            ║ root@debian-k8s:~# sudo apt-get update                                                                                                        ║
+            ║ sudo apt-get install -y kubectl                                                                                                               ║
+            ║ Hit:1 http://deb.debian.org/debian trixie InRelease                                                                                           ║
+            ║ Hit:2 http://security.debian.org trixie-security InRelease                                                                                    ║
+            ║ Hit:3 http://deb.debian.org/debian trixie-updates InRelease                                                                                   ║
+            ║ Get:4 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.34/deb  InRelease [1,186 B]                             ║
+            ║ Get:5 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.34/deb  Packages [4,405 B]                              ║
+            ║ Fetched 5,591 B in 12s (448 B/s)                                                                                                               ║
+            ║ Reading package lists... Done                                                                                                                  ║
+            ║ W: https://pkgs.k8s.io/core:/stable:/v1.34/deb/InRelease: Policy will reject signature within a year, see --audit for details                 ║
+            ║ Reading package lists... Done                                                                                                                  ║
+            ║ Building dependency tree... Done                                                                                                               ║
+            ║ Reading state information... Done                                                                                                              ║
+            ║ The following packages will be upgraded:                                                                                                      ║
+            ║   kubectl                                                                                                                                      ║
+            ║ 1 upgraded, 0 newly installed, 0 to remove and 10 not upgraded.                                                                                ║
+            ║ Need to get 11.7 MB of archives.                                                                                                               ║
+            ║ After this operation, 20.6 MB disk space will be freed.                                                                                       ║
+            ║ Get:1 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.34/deb  kubectl 1.34.1-1.1 [11.7 MB]                     ║
+            ║ Fetched 11.7 MB in 18s (661 kB/s)                                                                                                              ║
+            ║ (Reading database ... 28008 files and directories currently installed.)                                                                       ║
+            ║ Preparing to unpack .../kubectl_1.34.1-1.1_amd64.deb ...                                                                                       ║
+            ║ Unpacking kubectl (1.34.1-1.1) over (1.32.3+ds-2) ...                                                                                          ║
+            ║ Setting up kubectl (1.34.1-1.1) ...                                                                                                            ║
+            ║ root@debian-k8s:~#                                                                                                                             ║
+            ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
 
     *** Install using other package management 
             If you are on Ubuntu or another Linux distribution that supports the snap package manager, kubectl is available as a snap application.
