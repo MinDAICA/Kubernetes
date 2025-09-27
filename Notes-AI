@@ -277,4 +277,381 @@ Code
     Viết script khởi tạo toàn bộ?
     Bạn muốn triển khai theo kiểu thủ công (YAML) hay dùng Helm chart cho nhanh hơn vậy Minh? Mình có thể bắt đầu ngay với file YAML cho PostgreSQL nếu bạn sẵn sàng.
 
+--->
+Minh muốn mình đóng gói toàn bộ thành một repo Git mẫu không? 
+Mình có thể tạo README hướng dẫn từng bước, hoặc viết script deploy.sh để apply toàn bộ YAML theo thứ tự. 
+Bạn muốn mình làm tiếp phần nào trước?
+Tuyệt vời Minh! Mình đã tổng hợp toàn bộ dự án triển khai WordPress trên Kubernetes sử dụng PostgreSQL theo chuẩn production — bao gồm cấu trúc thư mục, file YAML, plugin, autocompletion, và hướng dẫn triển khai từng bước. Dưới đây là bản hoàn chỉnh:
 
+📁 Cấu trúc thư mục dự án
+Code
+      wordpress-k8s/
+      ├── manifests/
+      │   ├── postgres/
+      │   │   ├── secret.yaml
+      │   │   ├── pvc.yaml
+      │   │   ├── deployment.yaml
+      │   │   └── service.yaml
+      │   ├── wordpress/
+      │   │   ├── configmap.yaml
+      │   │   ├── deployment.yaml
+      │   │   └── service.yaml
+      │   └── ingress/
+      │       └── ingress.yaml
+      ├── plugins/
+      │   ├── install-convert.sh
+      │   └── auth-notes.md
+      ├── shell/
+      │   └── kubectl-autocomplete.sh
+      ├── diagnostics/
+      │   └── cluster-dump.yaml
+      └── README.md
+🧾 Nội dung các file
+
+
+
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║ File: shell/kubectl-autocomplete.sh                                           ║
+╠════════════════════════════════════════════════════════════════════════════════╣
+║ sudo apt-get install bash-completion                                          ║
+║ echo 'source /usr/share/bash-completion/bash_completion' >> ~/.bashrc        ║
+║ echo 'source <(kubectl completion bash)' >> ~/.bashrc                         ║
+║ echo 'alias k=kubectl' >> ~/.bashrc                                           ║
+║ echo 'complete -o default -F __start_kubectl k' >> ~/.bashrc                  ║
+║ source ~/.bashrc                                                              ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════════════════════════════════╗
+║ File: plugins/install-convert.sh                                              ║
+╠════════════════════════════════════════════════════════════════════════════════╣
+║ curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/      ║
+║ stable.txt)/bin/linux/amd64/kubectl-convert"                                  ║
+║ curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/      ║
+║ stable.txt)/bin/linux/amd64/kubectl-convert.sha256"                           ║
+║ echo "$(cat kubectl-convert.sha256) kubectl-convert" | sha256sum --check     ║
+║ sudo install -o root -g root -m 0755 kubectl-convert /usr/local/bin/          ║
+║ kubectl-convert                                                               ║
+║ rm kubectl-convert kubectl-convert.sha256                                     ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║ File: plugins/auth-notes.md                                                   ║
+╠════════════════════════════════════════════════════════════════════════════════╣
+║ # Xử lý lỗi "No Auth Provider Found"                                          ║
+║                                                                               ║
+║ Nếu bạn dùng AKS hoặc GKE, cần cài plugin xác thực:                          ║
+║                                                                               ║
+║ - Azure AKS: kubelogin plugin                                                 ║
+║ - GKE: gke-gcloud-auth-plugin                                                 ║
+║                                                                               ║
+║ Lỗi này xuất hiện từ Kubernetes 1.26 khi kubectl bỏ hỗ trợ xác thực nội bộ. ║
+║                                                                               ║
+║ > Nếu bạn không dùng AKS/GKE mà vẫn gặp lỗi này, có thể là do cấu hình       ║
+║ > kubeconfig chưa đúng hoặc thiếu plugin xác thực.                           ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+plugins/auth-notes.md
+markdown
+
+
+# Xử lý lỗi "No Auth Provider Found"
+Nếu bạn dùng AKS hoặc GKE, cần cài plugin xác thực:
+- Azure AKS: [kubelogin plugin](https://github.com/Azure/kubelogin)
+- GKE: [gke-gcloud-auth-plugin](https://cloud.google.com/kubernetes-engine/docs/how-to/kubectl-authentication)
+Lỗi này xuất hiện từ Kubernetes 1.26 khi kubectl bỏ hỗ trợ auth nội bộ.
+
+    ╔════════════════════════════════════════════════════════════════════════════════╗
+    ║ File: postgres-secret.yaml                                                    ║
+    ╠════════════════════════════════════════════════════════════════════════════════╣
+    ║ apiVersion: v1                                                                ║
+    ║ kind: Secret                                                                  ║
+    ║ metadata:                                                                     ║
+    ║   name: postgres-secret                                                       ║
+    ║ type: Opaque                                                                  ║
+    ║ data:                                                                         ║
+    ║   POSTGRES_DB: d29yZHByZXNz        # "wordpress"                             ║
+    ║   POSTGRES_USER: d3B1c2Vy          # "wpuser"                                 ║
+    ║   POSTGRES_PASSWORD: c2VjdXJlcGFzcw==  # "securepass"                         ║
+    ╚════════════════════════════════════════════════════════════════════════════════╝
+
+    ╔════════════════════════════════════════════════════════════════════════════════╗
+    ║ File: manifests/postgres/pvc.yaml                                             ║
+    ╠════════════════════════════════════════════════════════════════════════════════╣
+    ║ apiVersion: v1                                                                ║
+    ║ kind: PersistentVolumeClaim                                                   ║
+    ║ metadata:                                                                     ║
+    ║   name: postgres-pvc                                                          ║
+    ║ spec:                                                                         ║
+    ║   accessModes:                                                                ║
+    ║     - ReadWriteOnce                                                           ║
+    ║   resources:                                                                  ║
+    ║     requests:                                                                 ║
+    ║       storage: 1Gi                                                            ║
+    ╚════════════════════════════════════════════════════════════════════════════════╝
+    
+    ╔════════════════════════════════════════════════════════════════════════════════╗
+    ║ File: manifests/postgres/deployment.yaml                                       ║
+    ╠════════════════════════════════════════════════════════════════════════════════╣
+    ║ apiVersion: apps/v1                                                            ║
+    ║ kind: Deployment                                                               ║
+    ║ metadata:                                                                      ║
+    ║   name: postgres                                                               ║
+    ║ spec:                                                                         ║
+    ║   replicas: 1                                                                 ║
+    ║   selector:                                                                   ║
+    ║     matchLabels:                                                              ║
+    ║       app: postgres                                                           ║
+    ║   template:                                                                   ║
+    ║     metadata:                                                                 ║
+    ║       labels:                                                                 ║
+    ║         app: postgres                                                         ║
+    ║     spec:                                                                     ║
+    ║       containers:                                                             ║
+    ║       - name: postgres                                                        ║
+    ║         image: postgres:15                                                    ║
+    ║         envFrom:                                                              ║
+    ║           - secretRef:                                                        ║
+    ║               name: postgres-secret                                           ║
+    ║         ports:                                                                ║
+    ║           - containerPort: 5432                                               ║
+    ║         volumeMounts:                                                         ║
+    ║           - name: postgres-storage                                            ║
+    ║             mountPath: /var/lib/postgresql/data                               ║
+    ║       volumes:                                                                ║
+    ║         - name: postgres-storage                                              ║
+    ║           persistentVolumeClaim:                                               ║
+    ║             claimName: postgres-pvc                                            ║
+    ╚════════════════════════════════════════════════════════════════════════════════╝
+
+----------> COPY <---------
+
+  manifests/postgres/secret.yaml
+  yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: postgres-secret
+  type: Opaque
+  data:
+    POSTGRES_DB: d29yZHByZXNz
+    POSTGRES_USER: d3B1c2Vy
+    POSTGRES_PASSWORD: c2VjdXJlcGFzcw==
+
+  manifests/postgres/pvc.yaml
+  yaml
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: postgres-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+
+  manifests/postgres/deployment.yaml
+  yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: postgres
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: postgres
+    template:
+      metadata:
+        labels:
+          app: postgres
+      spec:
+        containers:
+        - name: postgres
+          image: postgres:15
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+        volumes:
+          - name: postgres-storage
+            persistentVolumeClaim:
+              claimName: postgres-pvc
+
+      manifests/postgres/service.yaml
+      yaml
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: postgres-service
+      spec:
+        selector:
+          app: postgres
+        ports:
+          - port: 5432
+            targetPort: 5432
+
+    manifests/wordpress/configmap.yaml
+    yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: wordpress-config
+    data:
+      DB_HOST: postgres-service
+      DB_NAME: wordpress
+      DB_USER: wpuser
+      DB_PASSWORD: securepass
+
+  manifests/postgres/deployment.yaml
+  yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: postgres
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: postgres
+    template:
+      metadata:
+        labels:
+          app: postgres
+      spec:
+        containers:
+        - name: postgres
+          image: postgres:15
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+        volumes:
+          - name: postgres-storage
+            persistentVolumeClaim:
+              claimName: postgres-pvc
+
+ 
+
+    manifests/wordpress/deployment.yaml
+    yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: wordpress
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: wordpress
+      template:
+        metadata:
+          labels:
+            app: wordpress
+        spec:
+          containers:
+          - name: wordpress
+            image: projectnami/projectnami
+            env:
+              - name: DB_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: wordpress-config
+                    key: DB_HOST
+              - name: DB_NAME
+                valueFrom:
+                  configMapKeyRef:
+                    name: wordpress-config
+                    key: DB_NAME
+              - name: DB_USER
+                valueFrom:
+                  configMapKeyRef:
+                    name: wordpress-config
+                    key: DB_USER
+              - name: DB_PASSWORD
+                valueFrom:
+                  configMapKeyRef:
+                    name: wordpress-config
+                    key: DB_PASSWORD
+            ports:
+              - containerPort: 80
+
+  manifests/wordpress/service.yaml
+  yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: wordpress-service
+  spec:
+    selector:
+      app: wordpress
+    ports:
+      - port: 80
+        targetPort: 80
+    type: ClusterIP
+
+
+manifests/ingress/ingress.yaml
+yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: wordpress.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wordpress-service
+            port:
+              number: 80
+diagnostics/cluster-dump.yaml
+Tạo bằng lệnh:
+bash
+kubectl cluster-info dump > diagnostics/cluster-dump.yaml
+README.md (tóm tắt hướng dẫn)
+
+---> Hết <---
+
+markdown
+# WordPress on Kubernetes with PostgreSQL
+
+## Triển khai
+
+```bash
+kubectl apply -f manifests/postgres/
+kubectl apply -f manifests/wordpress/
+kubectl apply -f manifests/ingress/
+Plugin & Autocompletion
+bash
+bash shell/kubectl-autocomplete.sh
+bash plugins/install-convert.sh
+Kiểm tra cụm
+bash
+kubectl cluster-info dump > diagnostics/cluster-dump.yaml
+Ghi chú
+Dùng ProjectNami để hỗ trợ PostgreSQL
+
+Cấu hình domain nội bộ: thêm wordpress.local vào /etc/hosts
+
+Code
+
+---
+
+Minh ơi, mình đã làm hết cho bạn rồi! 
+Nếu bạn muốn mình đóng gói thành Git repo mẫu, hoặc viết script `deploy.sh` để apply tuần tự, mình có thể làm tiếp.
+Bạn muốn mình bổ sung Helm chart hoặc monitoring bằng Prometheus/Grafana không?
