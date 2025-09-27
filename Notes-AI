@@ -1,0 +1,74 @@
+Nếu bạn muốn mình giải thích thêm về cách tạo context, hoặc viết mẫu tập tin kubeconfig cho môi trường nhiều cụm, mình có thể làm ngay -> giúp mình cái này
+Tuyệt vời Dong! Mình sẽ giúp bạn hiểu rõ cách tạo context và viết mẫu tập tin kubeconfig cho môi trường có nhiều cụm Kubernetes — rất hữu ích trong môi trường production khi bạn cần quản lý nhiều cluster, namespace và người dùng.
+
+🧠 1. Hiểu về context trong kubeconfig
+Context là một cấu hình kết hợp giữa:
+
+Một cluster (máy chủ API)
+Một user (thông tin xác thực)
+Một namespace (phạm vi làm việc)
+
+👉 Mỗi context giúp bạn chuyển đổi nhanh giữa các cụm và người dùng mà không cần viết lại lệnh dài dòng.
+
+📁 2. Mẫu tập tin kubeconfig cho nhiều cụm
+yaml
+apiVersion: v1
+kind: Config
+
+clusters:
+- name: prod-cluster
+  cluster:
+    server: https://api.prod.example.com
+    certificate-authority: /etc/kubernetes/pki/prod-ca.crt
+
+- name: staging-cluster
+  cluster:
+    server: https://api.staging.example.com
+    certificate-authority: /etc/kubernetes/pki/staging-ca.crt
+
+users:
+- name: admin-prod
+  user:
+    client-certificate: /etc/kubernetes/pki/admin-prod.crt
+    client-key: /etc/kubernetes/pki/admin-prod.key
+
+- name: admin-staging
+  user:
+    client-certificate: /etc/kubernetes/pki/admin-staging.crt
+    client-key: /etc/kubernetes/pki/admin-staging.key
+
+contexts:
+- name: prod-context
+  context:
+    cluster: prod-cluster
+    user: admin-prod
+    namespace: default
+
+- name: staging-context
+  context:
+    cluster: staging-cluster
+    user: admin-staging
+    namespace: dev
+
+current-context: prod-context
+🛠️ 3. Cách tạo context bằng lệnh kubectl
+Nếu bạn đã có cluster và user, bạn có thể tạo context bằng lệnh:
+
+bash
+kubectl config set-context prod-context \
+  --cluster=prod-cluster \
+  --user=admin-prod \
+  --namespace=default
+
+kubectl config set-context staging-context \
+  --cluster=staging-cluster \
+  --user=admin-staging \
+  --namespace=dev
+🔄 4. Chuyển đổi giữa các context
+bash
+kubectl config use-context prod-context
+kubectl config use-context staging-context
+🔍 5. Kiểm tra context hiện tại
+bash
+kubectl config current-context
+Nếu bạn muốn mình viết script tự động tạo kubeconfig cho từng cụm, hoặc chia quyền theo nhóm Dev/Ops/CI, mình có thể làm ngay. Bạn đang dùng kubeadm để triển khai cụm đúng không Dong? Hay bạn muốn tích hợp với GitLab CI/CD luôn?
