@@ -329,7 +329,19 @@ Các câu lệnh tạo thư mục và các file trên:
   touch wordpress-k8s/shell/kubectl-autocomplete.sh
   touch wordpress-k8s/diagnostics/cluster-dump.yaml
 
-
+Khi nhập nội dung bằng nano, ta gõ:
+  nano ~/wordpress-k8s/manifests/postgres/secret.yaml
+  nano ~/wordpress-k8s/manifests/postgres/pvc.yaml
+  nano ~/wordpress-k8s/manifests/postgres/deployment.yaml
+  nano ~/wordpress-k8s/manifests/postgres/service.yaml
+  nano ~/wordpress-k8s/manifests/wordpress/configmap.yaml
+  nano ~/wordpress-k8s/manifests/wordpress/deployment.yaml
+  nano ~/wordpress-k8s/manifests/wordpress/service.yaml
+  nano ~/wordpress-k8s/manifests/ingress/ingress.yaml
+  nano ~/wordpress-k8s/plugins/install-convert.sh
+  nano ~/wordpress-k8s/plugins/auth-notes.md
+  nano ~/wordpress-k8s/shell/kubectl-autocomplete.sh
+  nano ~/wordpress-k8s/diagnostics/cluster-dump.yaml
 
 
 🧾 Nội dung các file
