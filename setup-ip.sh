@@ -22,4 +22,7 @@ sudo mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.y
 # Khoi dong lai dich vu mang
 sudo systemctl restart systemd-networkd
 
+#Cap quyen thu thi file nay: chmod +x setup-ip.sh
+
+
 echo "Hoan tat. Vui long reboot de ap dung."
