@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "🔧 Đang cấu hình IP tĩnh cho ens18..."
+echo "Dang cau hinh IP tinh cho ens18..."
 
-# Tạo file cấu hình systemd-networkd
+# Tao file cau hinh systemd-networkd
 sudo mkdir -p /etc/systemd/network
 
 cat <<EOF | sudo tee /etc/systemd/network/10-ens18.network
@@ -16,10 +16,10 @@ DNS=8.8.8.8
 DHCP=no
 EOF
 
-# Tắt Netplan nếu có
+# Tat Netplan neu co
 sudo mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bak 2>/dev/null
 
-# Restart dịch vụ mạng
+# Khoi dong lai dich vu mang
 sudo systemctl restart systemd-networkd
 
-echo "✅ Hoàn tất. Vui lòng reboot để áp dụng."
+echo "Hoan tat. Vui long reboot de ap dung."
