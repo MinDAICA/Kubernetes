@@ -10,7 +10,7 @@ cat <<EOF | sudo tee /etc/systemd/network/10-ens18.network
 Name=ens18
 
 [Network]
-Address=192.168.1.174/24
+Address=192.168.1.199/24
 Gateway=192.168.1.1
 DNS=8.8.8.8
 DHCP=no
