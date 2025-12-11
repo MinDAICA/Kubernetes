@@ -80,6 +80,16 @@ Các Kubernetes Primitives quan trọng:
                 Tái sử dụng	      Thấp	                                Cao
                 Phù hợp cho	      Thao tác nhỏ, thử nghiệm	            Triển khai chính thức, hệ thống lớn
 
+          c. Cách tiếp cận lai (Hybrid Approach)
+             Cách tiếp cận lai (Hybrid Approach) Đôi khi, bạn có thể muốn sử dụng cách tiếp cận lai.
+              Bạn bắt đầu bằng việc dùng phương pháp imperative để tạo ra một file manifest mà không thực sự tạo đối tượng ngay.
+              Điều này được thực hiện bằng cách chạy lệnh kubectl run với các tùy chọn dòng lệnh -o yaml và --dry-run=client:
+          VD:  
+            $ kubectl run frontend --image=nginx --restart=Never -port=80 \
+              -o yaml --dry-run=client > pod.yaml
+          sau đó:
+            $ vim pod.yaml          # chỉnh sửa file manifest theo nhu cầu
+            $ kubectl create -f pod.yaml
+            pod/frontend created
+            $ kubectl describe pod frontend
 
-             
-      
