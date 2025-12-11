@@ -72,6 +72,13 @@ Các Kubernetes Primitives quan trọng:
               Đặc điểm:
                   Dùng file YAML/JSON để định nghĩa đối tượng.
                   Kubernetes sẽ tự động điều chỉnh trạng thái thực tế để khớp với trạng thái mong muốn.
+        So sánh:   Tiêu chí	        Imperative Approach	                  Declarative Approach
+
+                Cách thực hiện	  Lệnh trực tiếp (kubectl)	            File YAML/JSON + kubectl apply
+                Tốc độ	          Nhanh, tiện thử nghiệm	              Chậm hơn, cần viết YAML
+                Quản lý lâu dài	  Khó, dễ mất dấu cấu hình	            Dễ dàng, có thể lưu trữ và version control
+                Tái sử dụng	      Thấp	                                Cao
+                Phù hợp cho	      Thao tác nhỏ, thử nghiệm	            Triển khai chính thức, hệ thống lớn
 
 
              
