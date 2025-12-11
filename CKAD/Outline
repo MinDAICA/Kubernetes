@@ -92,4 +92,9 @@ Các Kubernetes Primitives quan trọng:
             $ kubectl create -f pod.yaml
             pod/frontend created
             $ kubectl describe pod frontend
+            Giải thích:
+            ( -o yaml: xuất ra định dạng YAML.
+              --dry-run=client: chỉ tạo file, không gửi yêu cầu lên API server.
+              > pod.yaml: ghi kết quả vào file pod.yaml.
+              👉 Kết quả: bạn có một file manifest pod.yaml.)
 
