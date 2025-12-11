@@ -10,4 +10,17 @@ creating, configuring, and inspecting Pods.)
       Metadata
       Spec
       Status
-     
+
+
+Các Kubernetes Primitives quan trọng:
+      Pod: đơn vị nhỏ nhất trong Kubernetes, chứa một hoặc nhiều container.
+      Deployment: quản lý nhiều Pod giống nhau, hỗ trợ cập nhật (rolling update) và rollback.
+      ReplicaSet: đảm bảo số lượng Pod replica luôn đúng với cấu hình.
+      Service: cung cấp endpoint ổn định để truy cập Pod, dù Pod có thay đổi IP.
+      Ingress: quản lý truy cập từ bên ngoài vào Service qua HTTP/HTTPS.
+      ConfigMap: lưu trữ dữ liệu cấu hình dạng key-value cho Pod.
+      Secret: lưu trữ dữ liệu nhạy cảm (mật khẩu, token).
+      Volume: cung cấp bộ nhớ cho Pod, vượt ra ngoài vòng đời ngắn hạn của container.
+      Namespace: chia cluster thành các không gian logic để quản lý tài nguyên.
+      Job / CronJob: chạy tác vụ một lần hoặc theo lịch định kỳ.
+           
