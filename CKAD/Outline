@@ -1,3 +1,13 @@
 Certified Kubernetes Application Developer (CKAD) Study Guide
 Benjamin Muschko
 https://github.com/bmuschko/ckad-study-guide/blob/master/ch19/secret/secret-opaque-data.yaml#L7
+
+Chapter 2: Core Concepts
+  1. Kubernetes Primitives: (This section focuses on the basics of Pod management:
+creating, configuring, and inspecting Pods.)
+      API version
+      Kind
+      Metadata
+      Spec
+      Status
+     
