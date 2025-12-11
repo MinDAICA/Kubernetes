@@ -98,3 +98,16 @@ Các Kubernetes Primitives quan trọng:
               > pod.yaml: ghi kết quả vào file pod.yaml.
               👉 Kết quả: bạn có một file manifest pod.yaml.)
 
+          Hiểu về Pod (Understanding Pods) Primitive quan trọng nhất trong Kubernetes API chính là Pod. 
+            Pod cho phép bạn chạy một ứng dụng đã được container hóa.
+            Trong thực tế, bạn thường sẽ gặp tình huống một Pod ánh xạ một container, 
+            tuy nhiên cũng có những trường hợp (sẽ được thảo luận ở các chương sau)
+            mà việc khai báo nhiều container trong cùng một Pod lại mang lại lợi ích.
+            Ngoài việc chỉ chạy một container,
+            Pod còn có thể sử dụng các dịch vụ khác như bộ nhớ lưu trữ lâu dài (persistent storage),
+            dữ liệu cấu hình (configuration data), và nhiều thành phần khác.
+            Vì vậy, hãy hình dung Pod như một wrapper (lớp bao bọc) để chạy container,
+            đồng thời đóng vai trò trung gian kết nối với các đối tượng Kubernetes khác.
+            Trước khi đi sâu hơn vào chi tiết về Pod,
+          chúng ta hãy cùng khám phá vai trò của container runtime tuân thủ chuẩn OCI trong hệ sinh thái Kubernetes.
+            Ở đây, chúng ta sẽ sử dụng Docker daemon như một ví dụ về container runtime.
