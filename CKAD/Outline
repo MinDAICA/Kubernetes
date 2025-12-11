@@ -38,7 +38,6 @@ VD: Deployent.yaml (3 Pod nginx và quản lý vòng đời của chúng)
             - name: myapp-container
               image: nginx:latest
 
-
 Các Kubernetes Primitives quan trọng:
       Pod: đơn vị nhỏ nhất trong Kubernetes, chứa một hoặc nhiều container.
       Deployment: quản lý nhiều Pod giống nhau, hỗ trợ cập nhật (rolling update) và rollback.
@@ -50,4 +49,30 @@ Các Kubernetes Primitives quan trọng:
       Volume: cung cấp bộ nhớ cho Pod, vượt ra ngoài vòng đời ngắn hạn của container.
       Namespace: chia cluster thành các không gian logic để quản lý tài nguyên.
       Job / CronJob: chạy tác vụ một lần hoặc theo lịch định kỳ.
-           
+
+  2. Object Management:
+        a. Imperative Approach: Cách tiếp cận mệnh lệnh
+            Định nghĩa: Người dùng ra lệnh trực tiếp cho Kubernetes thông qua các câu lệnh kubectl
+            VD:
+                kubectl run nginx --image=nginx:latest
+                kubectl create deployment myapp --image=nginx
+                kubectl delete pod myapp-pod
+            Đặc điểm:
+                  Không cần file manifest YAML.
+                  Tạo, sửa, xóa đối tượng ngay lập tức bằng lệnh.
+                  Cấu hình được truyền qua tham số dòng lệnh
+
+         b. Declarative Approach: Cách tiếp cận khai báo
+              Định nghĩa: Người dùng mô tả trạng thái mong muốn của đối tượng trong file manifest YAML, sau đó áp dụng cho cluster.
+              VD:
+                  $ vim pod.yaml
+                  $ kubectl create -f pod.yaml
+                  pod/frontend created 
+
+              Đặc điểm:
+                  Dùng file YAML/JSON để định nghĩa đối tượng.
+                  Kubernetes sẽ tự động điều chỉnh trạng thái thực tế để khớp với trạng thái mong muốn.
+
+
+             
+      
