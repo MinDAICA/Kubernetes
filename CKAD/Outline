@@ -10,6 +10,33 @@ creating, configuring, and inspecting Pods.)
       Metadata
       Spec
       Status
+VD: Pod.yaml
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: myapp-pod
+      spec:
+        containers:
+        - name: myapp-container
+          image: nginx:latest
+VD: Deployent.yaml (3 Pod nginx và quản lý vòng đời của chúng)
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: myapp-deployment
+      spec:
+        replicas: 3
+        selector:
+          matchLabels:
+            app: myapp
+        template:
+          metadata:
+            labels:
+              app: myapp
+          spec:
+            containers:
+            - name: myapp-container
+              image: nginx:latest
 
 
 Các Kubernetes Primitives quan trọng:
