@@ -1,4 +1,7 @@
 
+
+
+
 1 Introduction to Kubernetes for Developers.
       This chapter will cover the following topics:
       Kubernetes in a nutshell
@@ -23,4 +26,12 @@
 3 Delinkcious - the Sample Application.
 4 Setting Up the CI/CD Pipeline.
 5 Configuring Microservices with Kubernetes.
-
+6 Securing Microservices on Kubernetes.
+7 Talking to the World - APIs and Load Balancers.
+8 Working with Stateful Services.
+9 Running Serverless Tasks on Kubernetes.
+10 Testing Microservices.
+11 Deploying Microservices.
+12 Monitoring, Logging, and Metrics.
+13 Service Mesh - Working with Istio.
+14 The Future of Microservices and Kubernetes.
