@@ -1,0 +1,26 @@
+
+1 Introduction to Kubernetes for Developers.
+      This chapter will cover the following topics:
+      Kubernetes in a nutshell
+      The Kubernetes architecture
+      Kubernetes and microservices
+      Creating a local cluster
+2 Getting Started with Microservices.
+    We will cover a lot of material in this chapter:
+      Programming in the small – less is more
+      Making your microservice autonomous
+      Employing interfaces and contracts
+      Exposing your service via APIs
+      Using client libraries
+      Managing dependencies
+      Orchestrating microservices
+      Taking advantage of ownership
+      Understanding Conway's law
+      Troubleshooting across multiple services
+      Utilizing shared service libraries
+      Choosing a source control strategy
+      Creating a data strategy
+3 Delinkcious - the Sample Application.
+4 Setting Up the CI/CD Pipeline.
+5 Configuring Microservices with Kubernetes.
+
