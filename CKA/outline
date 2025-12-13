@@ -1,1 +1,26 @@
+Ultimate Certified Kubernetes Administrator (CKA) Certification Guide
+ - Rajesh Vishnupant Gheware -
+
+CHAPTER 1 Introduction to Kubernetes.
+CHAPTER 2 Installing Kubernetes
+CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
+CHAPTER 4 Service and Ingress - Exposing Apps Outside the Cluster
+CHAPTER 5 Deploy and Scale - Stateless Apps
+CHAPTER 6 Deployment Strategies – RollingUpdate, Recreate
+CHAPTER 7 Data Persistence - Local and Cloud
+CHAPTER 8 Deploy and Scale - StatefulSet
+CHAPTER 9 Configure Apps for Production Deployment
+CHAPTER 10 Cluster Database - Backup and Restore
+CHAPTER 11 Cluster Upgrade – kubeadm
+CHAPTER 12 CoreDNS
+CHAPTER 13 Networking - Pod Service and Ingress
+CHAPTER 14 Kubernetes CNI
+CHAPTER 15 Kubernetes Security
+CHAPTER 16 Troubleshooting
+CHAPTER 17 Kubernetes Production Essentials
+CHAPTER 18 Microservices Observability
+CHAPTER 19 Scalable Jenkins on Kubernetes
+CHAPTER 20 GitOps using ArgoCD and GitHub
+CHAPTER 21 CKA Exam Mastery
+
 
