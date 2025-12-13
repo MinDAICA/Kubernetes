@@ -23,8 +23,33 @@ Gigi Sayfan - Hands-On Microservices With Kubernetes_ Build, Deploy, And Manage 
       Choosing a source control strategy
       Creating a data strategy
 3 Delinkcious - the Sample Application.
+      Technical requirements:
+            Visual Studio Code
+            GoLand
+            LiteIDE
+      Introducing the Delinkcious directory structure
+      Introducing the Delinkcious microservices
+            The object model
+            The service implementation
+            Implementing the support functions
+            Invoking the API via a client library
+      Storing data
 4 Setting Up the CI/CD Pipeline.
+      Technical requirements
+      Options for the Delinkcious CI/CD pipeline
+      Building your images with CircleCI
+      Setting up continuous delivery for Delinkcious.
+      
 5 Configuring Microservices with Kubernetes.
+      Managing configuration the old-fashioned way
+      Managing configuration dynamically
+      Configuring microservices with Kubernetes
+            Working with Kubernetes ConfigMaps
+                  Creating and managing ConfigMaps
+                  Applying advanced configuration
+            Kubernetes custom resources
+            Service discovery
+
 6 Securing Microservices on Kubernetes.
 7 Talking to the World - APIs and Load Balancers.
 8 Working with Stateful Services.
