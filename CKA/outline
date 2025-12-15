@@ -2,8 +2,35 @@ Ultimate Certified Kubernetes Administrator (CKA) Certification Guide
  - Rajesh Vishnupant Gheware -
 
 CHAPTER 1 Introduction to Kubernetes.
+  Benefits of Kubernetes
+    Following is the list of a few benefits that Kubernetes offers:
+     - Service discovery and load balancing
+     - Automated rollouts and rollbacks
+     - Automated bin packing
+     - Self-healing
+     - Storage orchestration
+     - Secrets and configuration management
+
+
 CHAPTER 2 Installing Kubernetes
+    Structure
+      In this chapter, we will cover the following topics:
+      Basic Tools
+      Minikube:
+       - One of the easiest ways to set up a local Kubernetes cluster is by using Minikube
+       - It works on Linux, MacOS, and Windows.
+       - The main highlights of Minikube are its ability to be deployed on VMs, containers, and even on bare-metal.
+       - When it comes to deploying on containers, it supports CRI-O, Docker, and containerd.
+       - Minikube also supports advanced features such as LoadBalancer, filesystem mounts, FeatureGates, and NetworkPolicy.
+      Microk8s
+      KIND - Kubernetes INside Docker
+      Kubeadm
+      OS: Ubuntu 22.04
+
+
 CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
+
+
 CHAPTER 4 Service and Ingress - Exposing Apps Outside the Cluster
 CHAPTER 5 Deploy and Scale - Stateless Apps
 CHAPTER 6 Deployment Strategies – RollingUpdate, Recreate
