@@ -53,7 +53,13 @@ CHAPTER 1 Introduction to Kubernetes.
        lưu trữ bên ngoài như AWS EBS, Azure, Google, Ondat, CephFS, GlusterFS, PortWorx, Cinder, v.v.
 
      - Secrets and configuration management
-
+       Thông tin nhạy cảm mà ứng dụng cần sử dụng — chẳng hạn như API key — có thể được lưu trữ trong đối tượng Secret do Kubernetes cung cấp.
+       Tất cả thông tin lưu trong đối tượng Secret đều được mã hóa bằng base64 bởi Kubernetes.
+       Thông tin này có thể được ứng dụng truy cập thông qua biến môi trường (environment variables) hoặc hệ thống file của container.
+       Kubernetes cũng cung cấp đối tượng ConfigMap để lưu trữ các đầu vào tại thời điểm chạy, ví dụ như các biến môi trường.
+       Điều này mang lại sự linh hoạt khi triển khai ứng dụng trong nhiều môi trường khác nhau như test, pre-prod, prod, v.v.
+       Thông tin lưu trong đối tượng ConfigMap sẽ được cung cấp cho ứng dụng tại thời điểm chạy thông qua biến môi trường hoặc hệ thống file của container.
+       Kubernetes cũng đảm bảo rằng nếu có bất kỳ thay đổi nào trong đối tượng ConfigMap, thì ứng dụng liên quan sẽ được khởi động lại tự động để phản ánh sự thay đổi đó.
 
 CHAPTER 2 Installing Kubernetes
     Structure
