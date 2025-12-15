@@ -85,25 +85,32 @@ CHAPTER 1 Introduction to Kubernetes.
         sau đó máy chủ API lưu trạng thái mới nhất vào cơ sở dữ liệu ETCD.
 
 [Chat AI]
+Các thành phần chính
+ User/kubectl: Người dùng khởi tạo yêu cầu tạo Pod.
+ API Server: Giao diện phía trước của control plane; tất cả giao tiếp đều đi qua đây và nó chịu trách nhiệm xác thực yêu cầu.
+ etcd: Kho lưu trữ key-value nhất quán và có tính sẵn sàng cao cho toàn bộ dữ liệu của cluster.
+ Scheduler: Theo dõi các Pod mới chưa được gán node và chọn node tối ưu cho chúng.
+ Kubelet: Tác nhân chạy trên mỗi worker node, đảm bảo container trong Pod được khởi chạy.
+ Container Runtime (ví dụ: containerd/Docker): Công cụ nền tảng chịu trách nhiệm chạy container.
 
 Trình tự tạo Pod 
-Bước 1: Người dùng gửi Pod Manifest Người dùng (hoặc controller như Deployment) dùng kubectl để gửi Pod manifest (YAML hoặc JSON) đến API Server qua API request.
-Bước 2: API Server xác thực & kiểm tra API Server xác thực người dùng và kiểm tra định dạng manifest.
-Bước 3: API Server lưu vào etcd API Server ghi cấu hình đối tượng Pod vào etcd. Trạng thái Pod ban đầu là Pending và chưa có node được gán.
-Bước 4: Phản hồi đến người dùng API Server gửi xác nhận lại cho người dùng/kubectl rằng Pod đã được tạo.
-Bước 5: Scheduler phát hiện Pod mới Scheduler liên tục theo dõi API Server để tìm Pod chưa có nodeName.
-Bước 6: Scheduler gán Pod vào node Scheduler lọc và ưu tiên node phù hợp dựa trên tài nguyên (CPU, RAM), affinity, taints và tolerations; sau đó gửi “binding” để gán tên node vào trường spec.nodeName của Pod.
-Bước 7: API Server cập nhật etcd API Server cập nhật đối tượng Pod trong etcd với thông tin node đã chọn.
-Bước 8: Kubelet phát hiện Pod được gán Kubelet trên node được chỉ định theo dõi API Server và phát hiện Pod đã được gán cho node của nó.
-Bước 9: Kubelet tạo hạ tầng Pod
-Mạng: Thiết lập namespace mạng cho Pod (gán địa chỉ IP).
-Lưu trữ: Mount các volume cần thiết.
-Khởi tạo: Chạy các init container theo thứ tự.
-Bước 10: Kubelet giao tiếp với Container Runtime Kubelet liên lạc với Container Runtime (containerd, Docker) qua CRI để pull image (nếu chưa có) và khởi chạy container ứng dụng.
-Bước 11: Container Runtime chạy container Container Runtime khởi động các container.
-Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
-Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
-Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
+  Bước 1: Người dùng gửi Pod Manifest Người dùng (hoặc controller như Deployment) dùng kubectl để gửi Pod manifest (YAML hoặc JSON) đến API Server qua API request.
+  Bước 2: API Server xác thực & kiểm tra API Server xác thực người dùng và kiểm tra định dạng manifest.
+  Bước 3: API Server lưu vào etcd API Server ghi cấu hình đối tượng Pod vào etcd. Trạng thái Pod ban đầu là Pending và chưa có node được gán.
+  Bước 4: Phản hồi đến người dùng API Server gửi xác nhận lại cho người dùng/kubectl rằng Pod đã được tạo.
+  Bước 5: Scheduler phát hiện Pod mới Scheduler liên tục theo dõi API Server để tìm Pod chưa có nodeName.
+  Bước 6: Scheduler gán Pod vào node Scheduler lọc và ưu tiên node phù hợp dựa trên tài nguyên (CPU, RAM), affinity, taints và tolerations; sau đó gửi “binding” để gán tên node vào trường spec.nodeName của Pod.
+  Bước 7: API Server cập nhật etcd API Server cập nhật đối tượng Pod trong etcd với thông tin node đã chọn.
+  Bước 8: Kubelet phát hiện Pod được gán Kubelet trên node được chỉ định theo dõi API Server và phát hiện Pod đã được gán cho node của nó.
+  Bước 9: Kubelet tạo hạ tầng Pod
+     Mạng: Thiết lập namespace mạng cho Pod (gán địa chỉ IP).
+     Lưu trữ: Mount các volume cần thiết.
+     Khởi tạo: Chạy các init container theo thứ tự.
+  Bước 10: Kubelet giao tiếp với Container Runtime Kubelet liên lạc với Container Runtime (containerd, Docker) qua CRI để pull image (nếu chưa có) và khởi chạy container ứng dụng.
+  Bước 11: Container Runtime chạy container Container Runtime khởi động các container.
+  Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
+  Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
+  Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
 CHAPTER 2 Installing Kubernetes
     Structure
       In this chapter, we will cover the following topics:
