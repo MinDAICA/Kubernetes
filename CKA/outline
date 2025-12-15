@@ -111,6 +111,81 @@ Trình tự tạo Pod
   Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
   Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
   Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
+<--->
+   Trình tự tạo Pod – Giải thích từng bước
+1. Người dùng → API Server
+plaintext
+kubectl create -f pod.yml
+Người dùng sử dụng lệnh kubectl để gửi một Pod manifest (file YAML) đến API Server.
+
+Đây là điểm khởi đầu của quá trình tạo Pod.
+
+2. API Server → etcd
+plaintext
+save new state
+API Server xác thực và kiểm tra manifest, sau đó lưu trạng thái mới của Pod vào cơ sở dữ liệu etcd.
+Pod lúc này có trạng thái Pending, chưa được gán vào node nào.
+
+3. Controller Manager → etcd
+plaintext
+check for changes
+Controller Manager liên tục kiểm tra etcd để phát hiện các thay đổi trong cluster.
+
+4. Controller Manager ← etcd
+plaintext
+watch for unassigned pod(s)
+Controller Manager phát hiện có Pod mới chưa được gán node (nodeName="").
+
+5. Controller Manager → Scheduler
+plaintext
+notify about pod with nodename=""
+Controller Manager thông báo cho Scheduler rằng có Pod chưa được gán node.
+
+6. Scheduler ← Controller Manager
+plaintext
+assign pod to node
+Scheduler chạy thuật toán để chọn node phù hợp (dựa trên CPU, RAM, taints, affinity,…).
+
+Scheduler gán Pod vào một node cụ thể.
+
+7. Scheduler → etcd
+plaintext
+save new state
+Scheduler cập nhật thông tin node đã gán vào etcd.
+
+8. Kubelet ← etcd
+plaintext
+look for newly assigned pod(s)
+Kubelet trên node được gán theo dõi etcd và phát hiện Pod mới được gán cho node của nó.
+
+9. Kubelet → API Server
+plaintext
+bind pod to node
+Kubelet xác nhận việc gán Pod và gửi thông tin binding đến API Server.
+
+10. Kubelet → Container Runtime
+plaintext
+start container
+Kubelet giao tiếp với Container Runtime (như containerd hoặc Docker) để khởi chạy container trong Pod.
+
+11. Kubelet → API Server
+plaintext
+update pod status
+Sau khi container chạy thành công, Kubelet cập nhật trạng thái Pod thành Running lên API Server.
+
+12. API Server → etcd
+plaintext
+save new state
+API Server lưu trạng thái mới của Pod vào etcd.
+
+🧠 Tổng kết
+Sơ đồ này cho thấy quá trình tạo Pod là một chuỗi phối hợp giữa:
+Người dùng (kubectl)
+Control Plane (API Server, etcd, Controller Manager, Scheduler)
+Worker Node (Kubelet, Container Runtime)
+Mỗi bước đều có vai trò rõ ràng để đảm bảo Pod được tạo, gán node, khởi chạy container, và cập nhật trạng thái chính xác.
+<--->
+
 Questions:
    1. Which is the smallest deployable unit of execution in Kubernetes?
       The Pod is the smallest deployable unit in Kubernetes. 
