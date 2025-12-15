@@ -111,6 +111,36 @@ Trình tự tạo Pod
   Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
   Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
   Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
+Questions:
+   1. Which is the smallest deployable unit of execution in Kubernetes?
+      The Pod is the smallest deployable unit in Kubernetes. 
+      A Pod encapsulates one or more containers, their storage, and networking resources,
+      and represents a single instance of a running process in the cluster.
+   2. Which controller creates a load balancer in the cloud infrastructure?
+     The Service of type LoadBalancer is managed by the cloud-controller-manager.
+     This controller interacts with the underlying cloud provider’s APIs to provision 
+     and configure an external load balancer that routes traffic to the Kubernetes Service.
+
+
+Dưới đây là các controller cốt lõi chính:
+  1.	Deployment Controller
+  2.	ReplicaSet Controller
+  3.	StatefulSet Controller
+  4.	DaemonSet Controller
+  5.	Job Controller
+  6.	CronJob Controller
+  7.	Namespace Controller
+  8.	Service Controller (Tạo Load Balancer trong cloud)
+  9.	EndpointSlice/Endpoint Controller
+  10.	Node Controller
+  11.	PersistentVolume Controller
+  12.	Replication Controller (Cũ, hầu như được thay thế bởi ReplicaSet)
+  13.	ResourceQuota Controller
+  14.	ServiceAccount Controller
+  15.	Garbage Collector (GC) Controller
+  16.	TTL-After-Finished Controller
+
+
 CHAPTER 2 Installing Kubernetes
     Structure
       In this chapter, we will cover the following topics:
