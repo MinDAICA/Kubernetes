@@ -4,11 +4,54 @@ Ultimate Certified Kubernetes Administrator (CKA) Certification Guide
 CHAPTER 1 Introduction to Kubernetes.
   Benefits of Kubernetes
     Following is the list of a few benefits that Kubernetes offers:
-     - Service discovery and load balancing
+     - Service discovery and load balancing:
+       Kubernetes provides a service-level abstraction to expose your application.
+       This service abstraction enables decoupling between callers of your application and the application itself
+        Ví dụ: 
+         một ứng dụng frontend có thể gọi ứng dụng backend thông qua Service URL – một địa chỉ mạng ổn định có thể truy cập từ bất kỳ đâu trong cluster.
+         Trong khi các bản sao (replica) của ứng dụng backend có thể chạy trên nhiều node khác nhau hoặc được thay thế bằng bản mới,
+         ứng dụng frontend không cần quan tâm bản sao nào sẽ phản hồi. Điều này tương tự như việc ứng dụng truy cập cơ sở dữ liệu thông qua Database URL mà không cần lo lắng về các instance cơ sở dữ liệu bên dưới.
+
+        Ngoài việc cung cấp sự tách biệt giữa bên gọi và bên được gọi,
+       Kubernetes Service còn hoạt động như một load balancer.
+        Ví dụ: 
+         nếu có nhiều bản sao của ứng dụng backend,
+         Kubernetes sẽ phân phối request đến một trong các bản sao sẵn có.
+         Việc phân phối này thường theo cơ chế round-robin, tuy nhiên có thể tùy chỉnh.
+          Người dùng/Client        Load Balancer           Các Backend (Pods)
+        |                         |                    |
+        | ---- Yêu cầu 1 -------> |                    |
+        |                         | --(Chọn Pod A)-->  | --- Pod A
+        |                         |                    |
+        | <--- Phản hồi 1 --------|                    |
+        |                         |                    |
+        | ---- Yêu cầu 2 -------> |                    |
+        |                         | --(Chọn Pod B)-->  | --- Pod B
+        |                         |                    |
+        | <--- Phản hồi 2 --------|                    |
+        |                         |                    |
+        | ---- Yêu cầu 3 -------> |                    |
+        |                         | --(Chọn Pod C)-->  | --- Pod C
+        |                         |                    |
+        | <--- Phản hồi 3 --------|                    |
+        |                         |                    |
+        | ---- Yêu cầu 4 -------> |                    |
+        |                         | --(Chọn Pod A)-->  | --- Pod A (Quay vòng lại)
+        |                         |                    |
+        | <--- Phản hồi 4 --------|                    |
+        |                         |                    |
+         Cách làm này giúp hệ thống xử lý hiệu quả các mức tải khác nhau trên ứng dụng backend.
      - Automated rollouts and rollbacks
      - Automated bin packing
      - Self-healing
      - Storage orchestration
+       Hầu hết các ứng dụng doanh nghiệp cần có bộ nhớ lưu trữ tạm thời hoặc vĩnh viễn để hoạt động.
+       Kubernetes được thiết kế để cung cấp quyền truy cập vào nhiều loại lưu trữ khác nhau thông qua API Volume,
+       bất kể việc lưu trữ là cần thiết cho thời gian chạy hiện tại của ứng dụng,
+       xuyên suốt nhiều phiên chạy, hay sau khi khởi động lại để duy trì trạng thái ứng dụng.
+       Kubernetes cũng được thiết kế để làm việc với nhiều nhà cung cấp 
+       lưu trữ bên ngoài như AWS EBS, Azure, Google, Ondat, CephFS, GlusterFS, PortWorx, Cinder, v.v.
+
      - Secrets and configuration management
 
 
