@@ -60,7 +60,50 @@ CHAPTER 1 Introduction to Kubernetes.
        Điều này mang lại sự linh hoạt khi triển khai ứng dụng trong nhiều môi trường khác nhau như test, pre-prod, prod, v.v.
        Thông tin lưu trong đối tượng ConfigMap sẽ được cung cấp cho ứng dụng tại thời điểm chạy thông qua biến môi trường hoặc hệ thống file của container.
        Kubernetes cũng đảm bảo rằng nếu có bất kỳ thay đổi nào trong đối tượng ConfigMap, thì ứng dụng liên quan sẽ được khởi động lại tự động để phản ánh sự thay đổi đó.
+    
+  - Kubernetes Architecture:
+      Logical View
+       Control Plane
+         API Controller
+         ETCD Database
+         Scheduler
+         Controller (KCM - Kube Controller Manager)
+       Worker Plane
+         Kubelet
+         Kube-proxy
+      Dynamic View (hình POD Creation Sequence Diagram)
+       Giải thích Diagram:
+        Như bạn có thể thấy trong sơ đồ, khi người dùng yêu cầu tạo một pod,
+        Bộ điều khiển API (còn được gọi là API-server) sẽ phản hồi sau khi lưu yêu cầu vào cơ sở dữ liệu ETCD.
+        Các Bộ điều khiển (Controllers) liên tục kiểm tra các thay đổi mới trong cụm thông qua máy chủ API,
+        trong khi Trình lập lịch (scheduler) theo dõi tất cả các pod chưa được chỉ định node và sẽ gán node ngay khi các điều kiện cần thiết được đáp ứng.
+        Khi một pod được chỉ định vào một node, Trình lập lịch thông báo cho máy chủ API, 
+        sau đó máy chủ API lưu thông tin mới này vào cơ sở dữ liệu ETCD.
+        Trong khi đó, Kubelet nhận thông tin về các pod mới được chỉ định 
+        và khởi chạy chúng bằng thời gian chạy container (container runtime) trên các node được gán.
+        Kubelet cũng cập nhật điều này lên máy chủ API, 
+        sau đó máy chủ API lưu trạng thái mới nhất vào cơ sở dữ liệu ETCD.
 
+[Chat AI]
+
+Trình tự tạo Pod 
+Bước 1: Người dùng gửi Pod Manifest Người dùng (hoặc controller như Deployment) dùng kubectl để gửi Pod manifest (YAML hoặc JSON) đến API Server qua API request.
+Bước 2: API Server xác thực & kiểm tra API Server xác thực người dùng và kiểm tra định dạng manifest.
+Bước 3: API Server lưu vào etcd API Server ghi cấu hình đối tượng Pod vào etcd. Trạng thái Pod ban đầu là Pending và chưa có node được gán.
+Bước 4: Phản hồi đến người dùng API Server gửi xác nhận lại cho người dùng/kubectl rằng Pod đã được tạo.
+Bước 5: Scheduler phát hiện Pod mới Scheduler liên tục theo dõi API Server để tìm Pod chưa có nodeName.
+Bước 6: Scheduler gán Pod vào node Scheduler lọc và ưu tiên node phù hợp dựa trên tài nguyên (CPU, RAM), affinity, taints và tolerations; sau đó gửi “binding” để gán tên node vào trường spec.nodeName của Pod.
+Bước 7: API Server cập nhật etcd API Server cập nhật đối tượng Pod trong etcd với thông tin node đã chọn.
+Bước 8: Kubelet phát hiện Pod được gán Kubelet trên node được chỉ định theo dõi API Server và phát hiện Pod đã được gán cho node của nó.
+Bước 9: Kubelet tạo hạ tầng Pod
+Mạng: Thiết lập namespace mạng cho Pod (gán địa chỉ IP).
+Lưu trữ: Mount các volume cần thiết.
+Khởi tạo: Chạy các init container theo thứ tự.
+Bước 10: Kubelet giao tiếp với Container Runtime Kubelet liên lạc với Container Runtime (containerd, Docker) qua CRI để pull image (nếu chưa có) và khởi chạy container ứng dụng.
+Bước 11: Container Runtime chạy container Container Runtime khởi động các container.
+Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
+Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
+Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
 CHAPTER 2 Installing Kubernetes
     Structure
       In this chapter, we will cover the following topics:
