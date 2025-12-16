@@ -278,6 +278,11 @@ CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
         Scalability
         Rollout of a New Change
         Rollback
+
+       StatefulSet
+        Limitations
+        Running StatefulSet - Postgre Database
+
 CHAPTER 4 Service and Ingress - Exposing Apps Outside the Cluster
 CHAPTER 5 Deploy and Scale - Stateless Apps
 CHAPTER 6 Deployment Strategies – RollingUpdate, Recreate
