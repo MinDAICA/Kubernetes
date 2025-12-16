@@ -111,13 +111,13 @@ Trình tự tạo Pod
   Bước 12: Kubelet cập nhật API Server (Running) Khi container bắt đầu chạy, Kubelet cập nhật trạng thái Pod trên API Server thành Running.
   Bước 13: API Server cập nhật etcd Trạng thái mới của Pod được lưu vào etcd.
   Bước 14: Kubelet giám sát sức khỏe Kubelet tiếp tục giám sát bằng liveness/readiness probes. Pod được đánh dấu Ready khi tất cả container khỏe mạnh và sẵn sàng nhận traffic.
+
 <--->
-   Trình tự tạo Pod – Giải thích từng bước
+Trình tự tạo Pod – Giải thích từng bước
 1. Người dùng → API Server
 plaintext
 kubectl create -f pod.yml
 Người dùng sử dụng lệnh kubectl để gửi một Pod manifest (file YAML) đến API Server.
-
 Đây là điểm khởi đầu của quá trình tạo Pod.
 
 2. API Server → etcd
@@ -226,10 +226,39 @@ CHAPTER 2 Installing Kubernetes
        - The main highlights of Minikube are its ability to be deployed on VMs, containers, and even on bare-metal.
        - When it comes to deploying on containers, it supports CRI-O, Docker, and containerd.
        - Minikube also supports advanced features such as LoadBalancer, filesystem mounts, FeatureGates, and NetworkPolicy.
+       - Since we have got Oracle VirtualBox and Vagrant setup done,
+         we will launch Ubuntu 22.04 using Vagrant and then set up Minikube on it.
+         Minikube supports containers, so we will use Docker to launch a singlenode Kubernetes cluster.
       Microk8s
       KIND - Kubernetes INside Docker
       Kubeadm
       OS: Ubuntu 22.04
+
+      Questions: 
+1. API-server certificate and key are kept in which folder?
+   --> /etc/kubernetes/pki/
+2. API-server connects to ETCD running at which location?
+   --> https://127.0.0.1:2379
+3. API-server runs on which port?
+   --> 6443 (mặc định, giao tiếp HTTPS/TLS).
+4. Which data directory is used by ETCD?
+   --> 
+5. ETCD server uses its certificate and key files located in which folder?
+   --> 
+6. Which cluster CIDR is used?
+   +-------------------------------+-----------------------------+
+   | Plugin / Provider             | Cluster CIDR thường dùng    |
+   +-------------------------------+-----------------------------+
+   | Flannel                       | 10.244.0.0/16               |
+   | Calico                        | 192.168.0.0/16 hoặc tùy chỉnh|
+   | Weave Net                     | 10.32.0.0/12                |
+   | GKE (Google Kubernetes Engine)| 10.0.0.0/14 (có thể thay đổi)|
+   |                               |                             |
+   | Minikube                      | 10.0.0.1/24 (ví dụ mặc định)|
+   +-------------------------------+-----------------------------+
+7. Which range is used for service cluster IPs?
+
+8. At which location Scheduler config file is kept?
 
 
 CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
