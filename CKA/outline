@@ -242,9 +242,9 @@ CHAPTER 2 Installing Kubernetes
 3. API-server runs on which port?
    --> 6443 (mặc định, giao tiếp HTTPS/TLS).
 4. Which data directory is used by ETCD?
-   --> 
+   --> /var/lib/etcd (Nơi etcd lưu trữ dữ liệu trạng thái cluster.)
 5. ETCD server uses its certificate and key files located in which folder?
-   --> 
+   --> /etc/kubernetes/pki/etcd/ (Chứa chứng chỉ và khóa TLS dành riêng cho etcd.)
 6. Which cluster CIDR is used?
    +-------------------------------+-----------------------------+
    | Plugin / Provider             | Cluster CIDR thường dùng    |
@@ -257,9 +257,9 @@ CHAPTER 2 Installing Kubernetes
    | Minikube                      | 10.0.0.1/24 (ví dụ mặc định)|
    +-------------------------------+-----------------------------+
 7. Which range is used for service cluster IPs?
-
+   --> Mặc định: 10.96.0.0/12 (Dải địa chỉ IP dành cho các Service ClusterIP.)
 8. At which location Scheduler config file is kept?
-
+   --> /etc/kubernetes/scheduler.conf (File cấu hình để Scheduler giao tiếp với API Server.)
 
 CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
       Structure
