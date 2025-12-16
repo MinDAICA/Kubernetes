@@ -262,8 +262,22 @@ CHAPTER 2 Installing Kubernetes
 
 
 CHAPTER 3 Workload Objects – Pod, Deploy, StatefulSet
-
-
+      Structure
+       In this chapter, we will cover the following topics:
+         Pod
+          Running Pods
+         Container Probes
+          startupProbe
+          readinessProbe
+          livenessProbe
+         Deployment
+         StatefulSet
+          Limitations
+          Running StatefulSet - Postgre Database
+       Deployment/Deploy:
+        Scalability
+        Rollout of a New Change
+        Rollback
 CHAPTER 4 Service and Ingress - Exposing Apps Outside the Cluster
 CHAPTER 5 Deploy and Scale - Stateless Apps
 CHAPTER 6 Deployment Strategies – RollingUpdate, Recreate
