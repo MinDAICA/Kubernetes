@@ -1,1 +1,11 @@
+Kubernetes Certification Learning Path
 
+Cluster Architecture, Installation and Configuration
+Workloads and Scheduling
+Servicing and Networking
+Storage
+Troubleshooting
+---
+Reference manual: https://kubernetes.io/docs
+Blog: https://kubernetes.io/blog
+Helm: https://helm.sh/docs
