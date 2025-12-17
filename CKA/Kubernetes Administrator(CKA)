@@ -1,10 +1,38 @@
-Kubernetes Certification Learning Path
+[Benjamin Muschko - Certified Kubernetes Administrator (CKA) Study Guide (2025, O'Reilly Media, Inc.).pdf]
+
+Kubernetes Certification Learning Path:...
+Candidate Skills: 
+    Kubernetes architecture and concepts
+    The kubectl CLI tool
+    Kubernetes cluster maintenance tools
+    Working knowledge of a container runtime engine
+    Other relevant tools
+    Working knowledge of a container runtime engine
+    Other relevant tools
 
 Cluster Architecture, Installation and Configuration
-Workloads and Scheduling
-Servicing and Networking
-Storage
-Troubleshooting
+  
+
+Part 1: Introduction
+  Chapter 1: Exam Details and Resources (available)
+  Chapter 2: Kubernetes in a Nutshell (available)
+  Chapter 3: Interacting with Kubernetes (available)
+Part 2: Cluster Architecture, Installation, and Configuration
+      Workloads and Scheduling
+      Servicing and Networking
+      Storage
+      Troubleshooting
+      Involved Kubernetes Primitives
+        Hình [namepsace-Kubernetes primitives relevant to the exam]
+
+Chapter 4: Cluster Installation and Upgrade (available)
+Chapter 5: Backing Up and Restoring etcd (available)
+Chapter 6: Authentication, Authorization, and Admission Control
+(available)
+Chapter 7: Operators and Custom Resource Definitions (CRDs) (available)
+Chapter 8: Helm and Kustomize (available)
+Appendix A: Answers to Review Questions (available)
+Appendix B: Exam Review Guide (available)
 ---
 Reference manual: https://kubernetes.io/docs
 Blog: https://kubernetes.io/blog
