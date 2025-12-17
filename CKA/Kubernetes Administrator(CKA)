@@ -25,6 +25,11 @@ Part 2: Cluster Architecture, Installation, and Configuration
       Involved Kubernetes Primitives
         Hình [namepsace-Kubernetes primitives relevant to the exam]
 
+Part 1: Introduction
+Chapter 1: Exam Details and Resources (available)
+Chapter 2: Kubernetes in a Nutshell (available)
+Chapter 3: Interacting with Kubernetes (available)
+Part 2: Cluster Architecture, Installation, and Configuration
 Chapter 4: Cluster Installation and Upgrade (available)
 Chapter 5: Backing Up and Restoring etcd (available)
 Chapter 6: Authentication, Authorization, and Admission Control
