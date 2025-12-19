@@ -49,14 +49,36 @@ Chapter 4: Cluster Installation and Upgrade (available)
             sha256:cc89ea1f82d5ec460e21b69476e0c052d691d0c52cce83fbd7e403559c1ebdac
         
     Installing a Pod Network Add-on
+    
+    Managing a Highly Available Cluster
+        Stacked etcd Topology
+        External etcd Node Topology
+    Upgrading a Cluster Version
+        Upgrading control plane nodes
+        Upgrading worker nodes
+    Exam Essentials:
+        Understand why you need to provision infrastructure
+        Know how to create a Kubernetes cluster from scratch
+        Practice the cluster upgrade process
+        Have a theoretical understanding of high-availability cluster topologies
 
-Manage the lifecycle of Kubernetes clusters
-
+    Manage the lifecycle of Kubernetes clusters
+        
     Implement and configure a highly-available control plane
 
 Chapter 5: Backing Up and Restoring etcd (available)
-Chapter 6: Authentication, Authorization, and Admission Control
-(available)
+       Manage the lifecycle of Kubernetes clusters
+        Using the etcd Adminstration Utilities
+        Backing Up etcd
+        Restoring etcd
+
+Chapter 6: Authentication, Authorization, and Admission Control (available)
+        Triple-A for k8s:
+        Processing an API Request
+        Authentication with kubectl
+        Authorization with Role-Based Access Control
+            Working with Service Accounts  
+        Admission Control
 Chapter 7: Operators and Custom Resource Definitions (CRDs) (available)
 Chapter 8: Helm and Kustomize (available)
 Appendix A: Answers to Review Questions (available)
