@@ -199,20 +199,35 @@ Questions:
 
 Dưới đây là các controller cốt lõi chính:
   1.	Deployment Controller
+
   2.	ReplicaSet Controller
+
   3.	StatefulSet Controller
+
   4.	DaemonSet Controller
+
   5.	Job Controller
+
   6.	CronJob Controller
+
   7.	Namespace Controller
+
   8.	Service Controller (Tạo Load Balancer trong cloud)
+
   9.	EndpointSlice/Endpoint Controller
+
   10.	Node Controller
+
   11.	PersistentVolume Controller
+
   12.	Replication Controller (Cũ, hầu như được thay thế bởi ReplicaSet)
+
   13.	ResourceQuota Controller
+
   14.	ServiceAccount Controller
+
   15.	Garbage Collector (GC) Controller
+
   16.	TTL-After-Finished Controller
 
 
