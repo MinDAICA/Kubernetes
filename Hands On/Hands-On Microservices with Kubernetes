@@ -51,8 +51,11 @@ Gigi Sayfan - Hands-On Microservices With Kubernetes_ Build, Deploy, And Manage 
             Service discovery
 
 6 Securing Microservices on Kubernetes.
+
 7 Talking to the World - APIs and Load Balancers.
+
 8 Working with Stateful Services.
+
 9 Running Serverless Tasks on Kubernetes.
 10 Testing Microservices.
 11 Deploying Microservices.
